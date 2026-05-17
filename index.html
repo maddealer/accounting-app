@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Счетоводна Автоматизация - Краткосрочни Наеми</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f4f6f9;
+        color: #333;
+      }
+      .container {
+        display: flex;
+        gap: 20px;
+      }
+      .box {
+        flex: 1;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      h3 {
+        margin-top: 0;
+        color: #2c3e50;
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .checkbox-group {
+        display: flex;
+        gap: 10px;
+        margin: 15px 0;
+      }
+      button {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+      button:hover {
+        background: #2980b9;
+      }
+      .btn-success {
+        background: #2ecc71;
+      }
+      .btn-success:hover {
+        background: #27ae60;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background: #f2f2f2;
+      }
+
+      /* СТИЛОВЕ ЗА ТАБОВЕТЕ */
+      .tab-menu {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 5px;
+      }
+      .tab-btn {
+        background: #bdc3c7;
+        color: #333;
+        padding: 8px 15px;
+        border-radius: 4px 4px 0 0;
+        width: auto;
+        margin-bottom: 0;
+      }
+      .tab-btn.active {
+        background: #3498db;
+        color: white;
+        font-weight: bold;
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>🏡 Система за автоматизация на краткосрочни наеми</h2>
+    <div class="container">
+      <!-- ЛЯВА КОЛОНА: ГЛАВНО МЕНЮ И ТАБОВЕ -->
+      <div class="box">
+        <!-- ГЛАВЕН СЕЛЕКТОР (ИЗКАРАН НАД ВСИЧКИ ТАБОВЕ - ВИНАГИ АКТИВЕН) -->
+        <div
+          class="form-group"
+          style="
+            background: #ebf5fb;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #d4e6f1;
+          "
+        >
+          <label style="color: #2980b9; font-size: 15px"
+            >Избор на регистриран клиент:</label
+          >
+          <select
+            id="client-select"
+            style="border: 1px solid #3498db; font-size: 14px"
+          >
+            <option value="new">-- Създай нов клиент --</option>
+          </select>
+        </div>
+
+        <!-- Меню за превключване на табовете -->
+        <div class="tab-menu">
+          <button
+            class="tab-btn active"
+            id="btn-client"
+            onclick="switchTab('tab-client')"
+          >
+            👤 Постоянни данни
+          </button>
+          <button
+            class="tab-btn"
+            id="btn-period"
+            onclick="switchTab('tab-period')"
+          >
+            📊 Данни за период
+          </button>
+          <button class="tab-btn" id="btn-muni" onclick="switchTab('tab-muni')">
+            ⚙️ Настройки Общини
+          </button>
+        </div>
+
+        <!-- ТАБ 1: КЛИЕНТ -->
+        <div id="tab-client" class="tab-content active">
+          <h3>👤 Профил на физическото лице (СОЛ)</h3>
+          <div class="form-group">
+            <label>Име на лицето:</label><input type="text" id="name" />
+          </div>
+          <div class="form-group">
+            <label>ЕГН / ЛНЧ:</label><input type="text" id="egn" />
+          </div>
+          <div class="form-group">
+            <label>Булстат:</label><input type="text" id="bulstat" />
+          </div>
+          <div class="form-group">
+            <label>Община по местонахождение на имота:</label>
+            <select id="municipality">
+              <option value="Sozopol">Созопол</option>
+              <option value="Nesebar">Несебър</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Брой стаи в обекта (за патента):</label>
+            <input
+              type="text"
+              id="rooms"
+              value="3"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            />
+          </div>
+          <div class="checkbox-group">
+            <label
+              ><input type="checkbox" id="isPensioner" /> Лицето е ПЕНСИОНЕР
+              (осигурява се само на 8% Здраве)</label
+            >
+          </div>
+          <button id="save-btn" class="btn-success">
+            💾 Запази профила на клиента
+          </button>
+        </div>
+
+        <!-- ТАБ 2: ДАННИ ЗА ПЕРИОД -->
+        <div id="tab-period" class="tab-content">
+          <h3>📊 Месечни данни за отчитане</h3>
+          <div class="form-group">
+            <label>Реализирани нощувки през периода:</label>
+            <input
+              type="text"
+              id="nights"
+              value="70"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            />
+          </div>
+          <div class="form-group">
+            <label>Цена на една нощувка (EUR):</label>
+            <input
+              type="text"
+              id="price"
+              value="150"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+            />
+          </div>
+          <div class="form-group">
+            <label>Среден брой гости на нощувка (за тур. данък):</label>
+            <input
+              type="text"
+              id="guests"
+              value="3"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            />
+          </div>
+          <div class="form-group">
+            <label>Комисиона на платформата (Airbnb/Booking %):</label>
+            <input
+              type="text"
+              id="platformCommission"
+              value="15"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              >Брой активни месеци в сезона (за осигуровки и патент):</label
+            >
+            <input
+              type="text"
+              id="monthsWorked"
+              value="3"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            />
+          </div>
+          <button id="calc-btn">🧮 Изчисли данъци и такси</button>
+        </div>
+        <!-- ТАБ 3: НАСТРОЙКИ НА ОБЩИНИ (Поставете под края на Таб 2) -->
+        <div id="tab-muni" class="tab-content">
+          <h3>⚙️ Добавяне на Нова Данъчна Община</h3>
+          <!-- Поставете това в Таб 3, веднага под <h3> за Общините -->
+          <div
+            class="form-group"
+            style="
+              background: #fcf3cf;
+              padding: 12px;
+              border-radius: 6px;
+              border: 1px solid #f9e79f;
+              margin-bottom: 20px;
+            "
+          >
+            <label style="color: #b7950b"
+              >Преглед / Редакция на съществуваща община:</label
+            >
+            <select id="muni-select">
+              <option value="new">-- Създай нова община --</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Име на общината (на латиница, напр. Varna, Burgas):</label>
+            <input type="text" id="muniName" placeholder="напр. Varna" />
+          </div>
+          <div class="form-group">
+            <label>Туристическа такса на човек за нощувка (EUR):</label>
+            <input
+              type="text"
+              id="muniTouristTax"
+              placeholder="напр. 0.41"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+            />
+          </div>
+          <div class="form-group">
+            <label>Годишен патентен данък за 1 стая (EUR):</label>
+            <input
+              type="text"
+              id="muniPatentTax"
+              placeholder="напр. 35.79"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+            />
+          </div>
+          <button id="save-muni-btn" class="btn-success">
+            ➕ Запиши Общината в Системата
+          </button>
+        </div>
+      </div>
+
+      <!-- ДЯСНА КОЛОНА: СПРАВКИ И ЕКСПОРТ (Винаги видима) -->
+      <div class="box">
+        <h3>📈 Финансов разчет за клиента</h3>
+        <div id="result-table">Тук ще се генерира справката...</div>
+        <button
+          id="export-docx-btn"
+          style="background: #e67e22; margin-top: 10px; display: none"
+        >
+          📥 Експортирай разчета в Word (.docx)
+        </button>
+
+        <h3 style="margin-top: 30px">📂 Автоматично генериране на документи</h3>
+        <button id="gen-117">📄 Генерирай Протокол чл. 117 (ДДС)</button>
+        <button id="gen-d1">📁 Генерирай Декларация Образец 1 (НАП)</button>
+        <button id="gen-tourism">
+          📊 Генерирай Справка за Туристически данък
+        </button>
+      </div>
+    </div>
+
+    <script src="renderer.js"></script>
+    <script>
+      // Коригираната функция за табове - вече не пречи на бутоните за запис
+      function switchTab(tabId) {
+        // 1. Скриваме абсолютно всички табове на екрана
+        document.querySelectorAll(".tab-content").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        // 2. Деактивираме визуално всички бутони в менюто
+        document.querySelectorAll(".tab-menu .tab-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // 3. Показваме само таба, който ни трябва
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) {
+          targetTab.classList.add("active");
+        }
+
+        // 4. Оцветяваме правилния бутон в менюто
+        if (event && event.currentTarget) {
+          event.currentTarget.classList.add("active");
+        }
+      }
+    </script>
+  </body>
+</html>

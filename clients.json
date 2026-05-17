@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Иван Иванов",
+    "egn": "8301010101",
+    "bulstat": "BG8301010101",
+    "municipality": "Varna",
+    "rooms": 3,
+    "isPensioner": false,
+    "history": []
+  },
+  {
+    "name": "Петър Петров",
+    "egn": "8401010101",
+    "bulstat": "BG8401010101",
+    "municipality": "Nesebar",
+    "rooms": 2,
+    "isPensioner": true,
+    "history": []
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "Sozopol": {
+    "touristTaxPerPerson": 0.41,
+    "patentPerRoomAnnual": 35.79
+  },
+  "Nesebar": {
+    "touristTaxPerPerson": 0.33,
+    "patentPerRoomAnnual": 51.13
+  },
+  "Varna": {
+    "touristTaxPerPerson": 1,
+    "patentPerRoomAnnual": 50
+  },
+  "Burgas": {
+    "touristTaxPerPerson": 5,
+    "patentPerRoomAnnual": 1000
+  }
+}

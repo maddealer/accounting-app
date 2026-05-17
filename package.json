@@ -1,0 +1,21 @@
+{
+  "name": "accounting-app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "electron": "^42.1.0",
+    "iconv-lite": "^0.7.2"
+  },
+  "dependencies": {
+    "docx": "^9.6.1",
+    "exceljs": "^4.4.0"
+  }
+}
